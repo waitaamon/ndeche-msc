@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('category')->default('investigator');
+            $table->string('status')->default('active');
             $table->boolean('admin')->default(false);
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
