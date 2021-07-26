@@ -63,6 +63,7 @@ class Investigators extends Component
     public function getInvestigatorsQueryProperty()
     {
         return User::query()
+            ->where('category', 'investigator')
             ->when($this->search, fn($query, $search) => $query->search(['name', 'email'], $search));
     }
 

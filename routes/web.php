@@ -13,4 +13,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
 
     Route::get('institutions', fn() => view('institutions'))->name('institutions');
 
+
+    Route::get('roles', [\App\Http\Controllers\RolesController::class, 'index'])->name('roles');
+
 });

@@ -17,7 +17,7 @@ class CreateInstitutionsTable extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->ipAddress('ip_address');
+            $table->string('ip_address');
             $table->timestamps();
         });
     }
