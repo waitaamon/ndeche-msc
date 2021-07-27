@@ -8,8 +8,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
 
     Route::get('dashboard', fn() => view('dashboard'))->name('dashboard');
 
-    Route::get('investigators', fn() => view('investigators.index'))->name('investigators');
-    Route::get('investigators/{id}', [\App\Http\Controllers\InvestigatorsController::class, 'show']);
+    Route::resource('users', \App\Http\Controllers\UsersController::class)->only('index', 'show');
 
     Route::get('institutions', fn() => view('institutions'))->name('institutions');
 
