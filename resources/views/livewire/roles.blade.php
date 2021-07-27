@@ -8,13 +8,16 @@
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                 <tr>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Role Name
                     </th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Users Count
                     </th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Permissions Count
                     </th>
                     <th scope="col" class="relative px-6 py-3">
@@ -24,20 +27,30 @@
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
 
-                <tr>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        Jane Cooper
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        Regional Paradigm Technician
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        jane.cooper@example.com
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                    </td>
-                </tr>
+                @forelse($roles as $role)
+                    <tr wire:key="{{ $role->id  }}">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                            {{ $role->name }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            {{ optional($role->user)->count() }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            {{ $role->permissions_count }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <a href="#" wire:click.prevent="edit({{$role->id}})"
+                               class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="4" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center"> No
+                            roles
+                        </td>
+                    </tr>
+
+                @endforelse
                 </tbody>
             </table>
         </div>
@@ -45,7 +58,7 @@
 
     <x-jet-dialog-modal wire:model="showEditModal">
         <x-slot name="title">
-            Institution
+            Role
         </x-slot>
 
         <x-slot name="content">
@@ -55,22 +68,27 @@
                 <div class="grid grid-cols-6 gap-6 space-y-4">
 
                     <div class="col-span-6">
-                        <x-jet-label>Institution Name</x-jet-label>
-                        <x-jet-input type="text" wire:model="institution.name" />
-                        <x-jet-input-error for="institution.name" />
+                        <x-jet-label>Role Name</x-jet-label>
+                        <x-jet-input type="text" wire:model="role.name"/>
+                        <x-jet-input-error for="role.name"/>
                     </div>
 
 
                     <div class="col-span-6">
-                        <x-jet-label>Institution IP address</x-jet-label>
-                        <x-jet-input type="text" wire:model="institution.ip_address" />
-                        <x-jet-input-error for="institution.ip_address" />
-                    </div>
-
-                    <div class="col-span-6">
-                        <x-jet-label>Desription</x-jet-label>
-                        <textarea class="w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" wire:model="institution.description"></textarea>
-                        <x-jet-input-error for="institution.description" />
+                        <div class="grid grid-cols-4 gap-4">
+                            @foreach($permissions as $permission)
+                                <div class="col-span-2 flex items-center" wire:key="{{ (int)$permission->id  }}">
+                                    <input wire:model="selected_permissions" value="{{ $permission->id }}"
+                                           id="{{ \Illuminate\Support\Str::slug($permission->name) }}"
+                                           name="{{ \Illuminate\Support\Str::slug($permission->name) }}" type="checkbox"
+                                           class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                                    <label for="{{ \Illuminate\Support\Str::slug($permission->name) }}"
+                                           class="ml-2 block text-sm text-gray-900">
+                                        {{ $permission->name }}
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
 
                     <div class="col-span-6">

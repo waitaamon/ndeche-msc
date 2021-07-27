@@ -2,8 +2,9 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\User;
 use Livewire\Component;
+use Illuminate\Database\Eloquent\Collection;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class Roles extends Component
@@ -11,16 +12,18 @@ class Roles extends Component
     public bool $showEditModal = false;
     public string $search = '';
     public Role $role;
-    public  $permissions = [];
+    public  Collection $permissions;
+    public $selected_permissions = [];
 
     protected $rules = [
         'role.name' => 'required|string|max:255',
-        'permissions' => 'nullable|array'
+        'selected_permissions' => 'nullable|array'
     ];
 
     public function mount()
     {
         $this->role = $this->makeBlankRole();
+        $this->permissions = Permission::all();
     }
 
     public function create()
@@ -39,16 +42,20 @@ class Roles extends Component
     {
         if ($this->role->isNot($role)) $this->role = $role;
 
+        $this->selected_permissions = array_map('strval', $role->permissions->pluck('id')->toArray());
+
         $this->showEditModal = true;
     }
 
     public function save()
     {
+
         $this->validate();
 
+        $this->role->guard_name = 'web';
         $this->role->save();
 
-        $this->role->permissions()->sync($this->permissions);
+        $this->role->syncPermissions($this->selected_permissions);
 
         session()->flash('success', 'Role saved successfully');
 
@@ -58,7 +65,7 @@ class Roles extends Component
     public function getRolesQueryProperty()
     {
         return Role::query()
-            ->withCount('users', 'permissions')
+            ->withCount('permissions')
             ->when($this->search, fn($query, $search) => $query->search(['name'], $search));
     }
 
