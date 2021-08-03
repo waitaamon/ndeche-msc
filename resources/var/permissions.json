@@ -51,6 +51,9 @@
     "name": "update legal case"
   },
   {
-    "name": "publish legal case"
+    "name": "end legal case"
+  },
+  {
+    "name": "publish legal case to public"
   }
 ]

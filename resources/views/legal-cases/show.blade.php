@@ -11,6 +11,16 @@
             @if(auth()->user()->can('assign judicial officer') && $legalCase->status == 'published to judiciary')
                 @livewire('judicial-admin-actions', ['legalCase' => $legalCase])
             @endif
+            @if(auth()->user()->can('prosecute legal case') && $legalCase->status == 'assigned to judicial officer')
+                @livewire('judicial-officer-actions', ['legalCase' => $legalCase])
+            @endif
+            @if(auth()->user()->can('publish legal case to public') && $legalCase->status == 'concluded')
+                <a href="/publish-to-public/{{ $legalCase->id }}" class="text-red-500 hover:text-red-600">Publish to
+                    public</a>
+            @endif
+            @if(auth()->user()->can('publish legal case to public') && $legalCase->status == 'published to public')
+                <a href="/unpublish-to-public/{{ $legalCase->id }}" class="text-red-500 hover:text-red-600">Un Publish</a>
+            @endif
         </div>
     </div>
 

@@ -14,6 +14,9 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
 
     Route::resource('legal-cases', \App\Http\Controllers\LegalCasesController::class)->only('index', 'show');
 
+    Route::get('publish-to-public/{legalCase}', [\App\Http\Controllers\LegalCasesController::class, 'publish']);
+    Route::get('unpublish-to-public/{legalCase}', [\App\Http\Controllers\LegalCasesController::class, 'unpublish']);
+
     Route::get('institutions', fn() => view('institutions'))->name('institutions');
 
 

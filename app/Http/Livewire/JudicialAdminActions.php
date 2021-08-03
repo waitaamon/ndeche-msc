@@ -34,6 +34,7 @@ class JudicialAdminActions extends Component
     public function save()
     {
         $this->validate();
+        $this->legalCase->status = 'assigned to judicial officer';
         $this->legalCase->save();
 
         LegalCaseAssignedJudicialOfficer::dispatch($this->legalCase);
