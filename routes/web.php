@@ -10,6 +10,8 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
 
     Route::resource('users', \App\Http\Controllers\UsersController::class)->only('index', 'show');
 
+    Route::resource('legal-cases', \App\Http\Controllers\LegalCasesController::class)->only('index', 'show');
+
     Route::get('institutions', fn() => view('institutions'))->name('institutions');
 
 

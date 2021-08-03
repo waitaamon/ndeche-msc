@@ -9,5 +9,10 @@ class Institution extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'ip_address'];
+    protected $fillable = ['name', 'email', 'address', 'description', 'ip_address'];
+
+    public function legalCases()
+    {
+        return $this->hasMany(LegalCase::class);
+    }
 }

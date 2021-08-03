@@ -1,7 +1,7 @@
 <div>
     <div class="p-6">
         <div class="flex justify-end">
-            <x-jet-button type="button" wire:click="create">Add Institution</x-jet-button>
+            <x-jet-button type="button" wire:click="create">Create new legal case</x-jet-button>
         </div>
 
         <div class="mt-6 overflow-hidden border-b border-gray-200 sm:rounded-lg">
@@ -10,19 +10,23 @@
                 <tr>
                     <th scope="col"
                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Name
+                        Institution
                     </th>
                     <th scope="col"
                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Ip Address
+                        Created By
                     </th>
                     <th scope="col"
                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Case Count
+                        Status
                     </th>
                     <th scope="col"
                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Added On
+                        Created On
+                    </th>
+                    <th scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Last updated
                     </th>
                     <th scope="col" class="relative px-6 py-3">
                         <span class="sr-only">Edit</span>
@@ -31,29 +35,29 @@
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
 
-                @forelse($institutions as $institution)
-                    <tr wire:key="{{ $institution->id  }}">
+                @forelse($users as $user)
+                    <tr wire:key="{{ $user->id  }}">
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                            {{ $institution->name }}
+                            {{ $user->name }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {{ $institution->ip_address }}
+                            {{ $user->email }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {{  $institution->legal_cases_count }}
+                            {{  $user->roles->pluck('name') }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {{ $institution->created_at->format('d F, Y') }}
+                            {{ $user->created_at->format('d F, Y') }}
                         </td>
-                        <td class="px-6 py-4 space-x-2 whitespace-nowrap text-right text-sm font-medium">
-                            <a href="#" class="text-indigo-600 hover:text-indigo-900">View</a>
-                            <a href="#" wire:click.prevent="edit({{$institution->id}})" class="text-gray-600 hover:text-gray-900">Edit</a>
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <a href="#" wire:click.prevent="edit({{$user->id}})"
+                               class="text-indigo-600 hover:text-indigo-900">Edit</a>
                         </td>
                     </tr>
                 @empty
                     <tr>
                         <td colspan="4" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center"> No
-                            institutions
+                            users
                         </td>
                     </tr>
 
@@ -65,7 +69,7 @@
 
     <x-jet-dialog-modal wire:model="showEditModal">
         <x-slot name="title">
-            Institution
+            User
         </x-slot>
 
         <x-slot name="content">
@@ -75,33 +79,31 @@
                 <div class="grid grid-cols-6 gap-6 space-y-4">
 
                     <div class="col-span-6">
-                        <x-jet-label>Institution Name</x-jet-label>
-                        <x-jet-input type="text" wire:model="institution.name"/>
-                        <x-jet-input-error for="institution.name"/>
+                        <x-jet-label>User Name</x-jet-label>
+                        <x-jet-input type="text" wire:model="user.name"/>
+                        <x-jet-input-error for="user.name"/>
                     </div>
 
                     <div class="col-span-6">
-                        <x-jet-label>Institution Email</x-jet-label>
-                        <x-jet-input type="email" wire:model="institution.email"/>
-                        <x-jet-input-error for="institution.email"/>
+                        <x-jet-label>User Email</x-jet-label>
+                        <x-jet-input type="email" wire:model="user.email"/>
+                        <x-jet-input-error for="user.email"/>
                     </div>
 
                     <div class="col-span-6">
-                        <x-jet-label>Institution Address</x-jet-label>
-                        <x-jet-input type="text" wire:model="institution.address"/>
-                        <x-jet-input-error for="institution.address"/>
+                        <x-jet-label>User Password</x-jet-label>
+                        <x-jet-input type="password" wire:model="password"/>
+                        <x-jet-input-error for="password"/>
                     </div>
 
                     <div class="col-span-6">
-                        <x-jet-label>Institution Ip Address</x-jet-label>
-                        <x-jet-input type="text" wire:model="institution.ip_address"/>
-                        <x-jet-input-error for="institution.ip_address"/>
-                    </div>
-
-                    <div class="col-span-6">
-                        <x-jet-label>Institution Description</x-jet-label>
-                        <x-input.textarea wire:model="institution.description"/>
-                        <x-jet-input-error for="institution.description"/>
+                        <x-jet-label>User Role</x-jet-label>
+                        <x-input.select wire:model="selected_role" placeholder="Select user role">
+                            @foreach($roles as $role)
+                                <option value="{{ $role->id }}" wire:key="{{ $role->id }}">{{ $role->name }}</option>
+                            @endforeach
+                        </x-input.select>
+                        <x-jet-input-error for="selected_role"/>
                     </div>
 
                     <div class="col-span-6">

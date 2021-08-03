@@ -2,23 +2,46 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Institution;
 use Livewire\Component;
+use App\Models\Institution;
+use Illuminate\Database\Eloquent\Collection;
 
 class Institutions extends Component
 {
     public Institution $institution;
     public bool $showEditModal = false;
+    public string $search = '';
 
     protected $rules = [
-        'institution.name' => 'required|string|min:3',
-        'institution.description' => 'nullable|string|max:500',
-        'institution.ip_address' => 'required|ip',
+        'institution.name' => 'required|string|max:255',
+        'institution.description' => 'nullable|string',
+        'institution.email' => 'required|string|email|max:255',
+        'institution.address' => 'required|string|max:255',
+        'institution.ip_address' => 'required|string',
     ];
 
     public function mount()
     {
-        $this->institution = new Institution();
+        $this->institution = $this->makeBlankInstitution();
+    }
+
+    public function create()
+    {
+        if ($this->institution->getKey()) $this->institution = $this->makeBlankInstitution();
+
+        $this->showEditModal = true;
+    }
+
+    public function makeBlankInstitution()
+    {
+        return new Institution();
+    }
+
+    public function edit(Institution $institution)
+    {
+        if ($this->institution->isNot($institution)) $this->institution = $institution;
+
+        $this->showEditModal = true;
     }
 
     public function save()
@@ -27,22 +50,29 @@ class Institutions extends Component
 
         $this->institution->save();
 
+        $this->institution = $this->makeBlankInstitution();
+
+        session()->flash('success', 'Institution saved successfully');
+
         $this->showEditModal = false;
-
-        session()->flash('flash.banner', 'Successfully added institution');
-        session()->flash('flash.bannerStyle', 'success');
-
-        return redirect()->to('/institutions');
-
     }
 
-    public function create()
+    public function getInstitutionsQueryProperty()
     {
-        $this->showEditModal = true;
+        return Institution::query()
+            ->withCount('legalCases')
+            ->when($this->search, fn($query, $search) => $query->search(['name'], $search));
+    }
+
+    public function getInstitutionsProperty()
+    {
+        return $this->institutionsQuery->paginate(10);
     }
 
     public function render()
     {
-        return view('livewire.institutions');
+        return view('livewire.institutions', [
+            'institutions' => $this->institutions
+        ]);
     }
 }

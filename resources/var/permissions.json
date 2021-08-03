@@ -1,8 +1,41 @@
 [
   {
-    "name": "manage Institutions"
+    "name": "view dashboard"
+  },
+  {
+    "name": "manage institutions"
   },
   {
     "name": "manage roles"
+  },
+  {
+    "name": "list users"
+  },
+  {
+    "name": "view user"
+  },
+  {
+    "name": "update user"
+  },
+  {
+    "name": "list legal cases"
+  },
+  {
+    "name": "view legal case"
+  },
+  {
+    "name": "create legal case"
+  },
+  {
+    "name": "assign investigation officer"
+  },
+  {
+    "name": "assign judicial officer"
+  },
+  {
+    "name": "update legal case"
+  },
+  {
+    "name": "publish legal case"
   }
 ]

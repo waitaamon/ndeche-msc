@@ -1,9 +1,9 @@
-@props(['active'])
+@props(['active', 'permissions' => []])
 
 @php
-$classes = ($active ?? false)
-            ? 'bg-indigo-800 text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md'
-            : 'text-indigo-100 hover:bg-indigo-600 group flex items-center px-2 py-2 text-sm font-medium rounded-md';
+    $classes = ($active ?? false)
+                ? 'bg-indigo-800 text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md'
+                : 'text-indigo-100 hover:bg-indigo-600 group flex items-center px-2 py-2 text-sm font-medium rounded-md';
 @endphp
 
 <a {{ $attributes->merge(['class' => $classes]) }}>
