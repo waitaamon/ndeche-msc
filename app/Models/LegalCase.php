@@ -10,7 +10,10 @@ class LegalCase extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['institution_id', 'user_id', 'investigation_officer_id', 'judicial_officer_id', 'description', 'status'];
+    protected $fillable = [
+        'institution_id', 'user_id', 'investigator_id', 'judicial_officer_id', 'title', 'description',
+        'investigator_remarks', 'judicial_officer_remarks', 'judge_remarks', 'status'
+    ];
 
     public function institution(): BelongsTo
     {
@@ -22,9 +25,9 @@ class LegalCase extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function investigationOfficer(): BelongsTo
+    public function investigator(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'investigation_officer_id');
+        return $this->belongsTo(User::class, 'investigator_id');
     }
 
     public function judicialOfficer(): BelongsTo

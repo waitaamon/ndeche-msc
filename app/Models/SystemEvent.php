@@ -13,4 +13,8 @@ class SystemEvent extends Model
 
     protected $primaryKey = 'identifier';
 
+    protected $fillable = ['CustomerID', 'FromHost', 'Message', 'NTSeverity', 'Importance', 'ReceivedAt', 'DeviceReportedTime', 'SysLogTag'];
+
+    protected $dates = ['ReceivedAt', 'DeviceReportedTime'];
+
 }

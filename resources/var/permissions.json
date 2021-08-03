@@ -36,7 +36,16 @@
     "name": "assign investigation officer"
   },
   {
+    "name": "investigate legal case"
+  },
+  {
+    "name": "publish legal case to judiciary"
+  },
+  {
     "name": "assign judicial officer"
+  },
+  {
+    "name": "prosecute legal case"
   },
   {
     "name": "update legal case"

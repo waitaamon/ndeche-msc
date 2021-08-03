@@ -17,9 +17,13 @@ class CreateLegalCasesTable extends Migration
             $table->id();
             $table->foreignId('institution_id')->constrained();
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('investigation_officer_id')->nullable()->constrained('users');
+            $table->foreignId('investigator_id')->nullable()->constrained('users');
             $table->foreignId('judicial_officer_id')->nullable()->constrained('users');
+            $table->string('title');
             $table->text('description');
+            $table->text('investigator_remarks')->nullable();
+            $table->text('judicial_officer_remarks')->nullable();
+            $table->text('judge_remarks')->nullable();
             $table->string('status')->default('new');
             $table->timestamps();
         });

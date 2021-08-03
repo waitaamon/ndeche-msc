@@ -12,10 +12,14 @@ class LegalCasesController extends Controller
         return view('legal-cases.index');
     }
 
-    public function show($id)
+    public function show(LegalCase $legalCase)
     {
         abort_if(!auth()->user()->can('view legal case'), 403);
 
-        $legalCase = LegalCase::findOrFail($id);
+        $legalCase->load('institution', 'user', 'investigator', 'judicialOfficer');
+
+        $systemEvents = $legalCase->systemEvents()->paginate(10);
+
+        return view('legal-cases.show', compact('legalCase', 'systemEvents'));
     }
 }
