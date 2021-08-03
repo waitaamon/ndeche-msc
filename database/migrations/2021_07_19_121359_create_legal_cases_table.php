@@ -20,6 +20,7 @@ class CreateLegalCasesTable extends Migration
             $table->foreignId('investigator_id')->nullable()->constrained('users');
             $table->foreignId('judicial_officer_id')->nullable()->constrained('users');
             $table->string('title');
+            $table->string('slug');
             $table->text('description');
             $table->text('investigator_remarks')->nullable();
             $table->text('judicial_officer_remarks')->nullable();

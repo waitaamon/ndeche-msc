@@ -5,15 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany};
+use Illuminate\Support\Str;
 
 class LegalCase extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'institution_id', 'user_id', 'investigator_id', 'judicial_officer_id', 'title', 'description',
+        'institution_id', 'user_id', 'investigator_id', 'judicial_officer_id', 'title', 'slug', 'description',
         'investigator_remarks', 'judicial_officer_remarks', 'judge_remarks', 'status'
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::saving(fn(LegalCase $legalCase) => $legalCase->title = Str::slug($legalCase->title));
+    }
 
     public function institution(): BelongsTo
     {
