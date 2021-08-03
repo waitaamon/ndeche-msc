@@ -34,7 +34,7 @@
         </x-jet-nav-link>
     @endcan
 
-    @can('manage institutions')
+    @can('list institutions')
         <x-jet-nav-link href="{{ route('institutions') }}" :active="request()->routeIs('institutions')" permissions="">
             <svg xmlns="http://www.w3.org/2000/svg" class="mr-3 flex-shrink-0 h-6 w-6 text-indigo-300" fill="none"
                  viewBox="0 0 24 24" stroke="currentColor">

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\{BelongsTo};
+use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany};
 
 class LegalCase extends Model
 {
@@ -32,4 +32,15 @@ class LegalCase extends Model
         return $this->belongsTo(User::class, 'judicial_officer_id');
     }
 
+    public function systemEvents(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            SystemEvent::class,
+            'legal_case_system_event',
+            'legal_case_id',
+            'system_event_id',
+            'id',
+            'identifier'
+        );
+    }
 }

@@ -10,4 +10,7 @@ class SystemEvent extends Model
     use HasFactory;
 
     protected $table = 'SystemEvents';
+
+    protected $primaryKey = 'identifier';
+
 }

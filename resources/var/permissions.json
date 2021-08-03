@@ -3,7 +3,13 @@
     "name": "view dashboard"
   },
   {
-    "name": "manage institutions"
+    "name": "list institutions"
+  },
+  {
+    "name": "view institution"
+  },
+  {
+    "name": "edit institution"
   },
   {
     "name": "manage roles"

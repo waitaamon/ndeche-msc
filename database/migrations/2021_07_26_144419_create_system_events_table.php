@@ -14,6 +14,7 @@ class CreateSystemEventsTable extends Migration
     public function up()
     {
         \Illuminate\Support\Facades\DB::statement('CREATE TABLE `SystemEvents` (
+              `identifier` int(10) UNIQUE AUTO_INCREMENT,
               `ID` int(10) UNSIGNED NOT NULL,
               `CustomerID` bigint(20) DEFAULT NULL,
               `ReceivedAt` datetime DEFAULT NULL,
