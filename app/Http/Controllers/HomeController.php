@@ -3,9 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\LegalCase;
+use App\Models\SystemEvent;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
+    public function debug()
+    {
+        return  DB::table('SystemEvents')->select('SystemEvents.identifier', 'SystemEvents.FromHost')->groupBy('FromHost')->get();
+    }
+
+
     public function __invoke()
     {
         $legalCases = LegalCase::query()->where('status', 'published to public')->get();

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -25,6 +26,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Schema::defaultStringLength(191);
+
         Builder::macro('search', function ($attributes, string $searchTerm) {
             $this->where(function (Builder $query) use ($attributes, $searchTerm) {
                 foreach (Arr::wrap($attributes) as $attribute) {

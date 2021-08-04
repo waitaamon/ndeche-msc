@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\SystemEvent;
 use Livewire\Component;
 use App\Models\Institution;
 use Illuminate\Database\Eloquent\Collection;
@@ -9,6 +10,7 @@ use Illuminate\Database\Eloquent\Collection;
 class Institutions extends Component
 {
     public Institution $institution;
+    public $ipAddresses = [];
     public bool $showEditModal = false;
     public string $search = '';
 
@@ -23,6 +25,7 @@ class Institutions extends Component
     public function mount()
     {
         $this->institution = $this->makeBlankInstitution();
+//        $this->ipAddresses =
     }
 
     public function create()

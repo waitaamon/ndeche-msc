@@ -2,11 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 
+Route::get('debug', [\App\Http\Controllers\HomeController::class, 'debug']);
+
 Route::get('/', \App\Http\Controllers\HomeController::class);
 
 Route::get('legal-case/{slug}', [\App\Http\Controllers\HomeController::class, 'show']);
-
-Route::get('debug', \App\Http\Controllers\HomeController::class);
 
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
 
