@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany};
@@ -21,6 +22,13 @@ class LegalCase extends Model
         parent::boot();
 
         static::saving(fn(LegalCase $legalCase) => $legalCase->title = Str::slug($legalCase->title));
+    }
+
+    CONST STATUSES = ['new', 'published to judiciary', 'assigned judicial officer', 'concluded', 'published to public'];
+
+    public function scopeUnderInvestigations(Builder $builder):Builder
+    {
+        return $builder->where('status', '!=', 'concluded')->where('status', '!=', 'published to public');
     }
 
     public function institution(): BelongsTo

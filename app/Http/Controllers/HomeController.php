@@ -2,17 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Institution;
 use App\Models\LegalCase;
 use App\Models\SystemEvent;
-use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
-    public function debug()
-    {
-        return  DB::table('SystemEvents')->select('SystemEvents.identifier', 'SystemEvents.FromHost')->groupBy('FromHost')->get();
-    }
-
 
     public function __invoke()
     {
@@ -32,6 +27,12 @@ class HomeController extends Controller
 
     public function dashboard()
     {
-        return view('dashboard');
+        $institutionsCount = Institution::query()->count();
+
+        $casesCount = LegalCase::query()->underInvestigations()->count();
+
+        $sysEventsCount = SystemEvent::query()->count();
+
+        return view('dashboard', compact('institutionsCount', 'casesCount', 'sysEventsCount'));
     }
 }

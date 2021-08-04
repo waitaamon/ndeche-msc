@@ -30,12 +30,12 @@
             <svg xmlns="http://www.w3.org/2000/svg" class="mr-3 flex-shrink-0 h-6 w-6 text-indigo-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
             </svg>
-            {{ __('Legal Cases') }}
+            {{ __('Cases') }}
         </x-jet-nav-link>
     @endcan
 
     @can('list institutions')
-        <x-jet-nav-link href="{{ route('institutions') }}" :active="request()->routeIs('institutions')" permissions="">
+        <x-jet-nav-link href="{{ route('institutions.index') }}" :active="request()->routeIs('institutions')" permissions="">
             <svg xmlns="http://www.w3.org/2000/svg" class="mr-3 flex-shrink-0 h-6 w-6 text-indigo-300" fill="none"
                  viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
