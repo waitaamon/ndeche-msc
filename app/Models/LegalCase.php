@@ -21,7 +21,7 @@ class LegalCase extends Model
     {
         parent::boot();
 
-        static::saving(fn(LegalCase $legalCase) => $legalCase->title = Str::slug($legalCase->title));
+        static::saving(fn(LegalCase $legalCase) => $legalCase->slug = Str::slug($legalCase->title));
     }
 
     CONST STATUSES = ['new', 'published to judiciary', 'assigned judicial officer', 'concluded', 'published to public'];

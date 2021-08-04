@@ -24,6 +24,12 @@
     "name": "update user"
   },
   {
+    "name": "add and update investigator"
+  },
+  {
+    "name": "add and update judicial officer"
+  },
+  {
     "name": "list legal cases"
   },
   {
